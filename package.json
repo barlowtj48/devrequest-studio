@@ -1,10 +1,10 @@
 {
   "name": "postcode-v2",
   "publisher": "thomas-barlow",
-  "displayName": "Postcode V2",
+  "displayName": "Postcode Collections (Community)",
   "icon": "icons/icon.png",
-  "description": "An API client to test and create HTTP/s requests",
-  "version": "1.4.2",
+  "description": "Community-maintained API request client for VS Code with workspace collections and request saving",
+  "version": "1.4.3",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/barlowtj48/postcode-v2/issues"
@@ -34,7 +34,7 @@
     "commands": [
       {
         "command": "postcode.createRequest",
-        "title": "Postcode: Create Request"
+        "title": "Postcode Collections: Create Request"
       },
       {
         "command": "postcode.saveRequest",
@@ -69,7 +69,7 @@
       "activitybar": [
         {
           "id": "postcode",
-          "title": "Postcode",
+          "title": "Postcode Collections",
           "icon": "webview/icons/package.svg"
         }
       ]

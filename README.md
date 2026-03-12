@@ -1,4 +1,4 @@
-<h1 align="center">Postcode V2</h1>
+<h1 align="center">Postcode Collections (Community)</h1>
 <div align="center">
   <strong> API client for VS Code 📦</strong>  
   <br/> <br/>
@@ -8,7 +8,9 @@
 </div>
 <br />
 
-Postcode V2 is a fork of [Postcode](https://github.com/rohinivsenthil/postcode) that adds support for saving and organizing requests into collections. Create and test HTTP/s requests, then save them for later.
+Postcode Collections (Community) is a community-maintained fork of [Postcode](https://github.com/rohinivsenthil/postcode) focused on workspace collections. It helps you create and test HTTP/s requests, then save and organize them for reuse.
+
+> This extension is an independent community fork and is not affiliated with or published by the maintainers of the original Postcode extension.
 
 ## Highlighted Features
 
@@ -19,8 +21,8 @@ Postcode V2 is a fork of [Postcode](https://github.com/rohinivsenthil/postcode) 
 
 ## Quick start
 
-1. Install the Postcode V2 extension for Visual Studio Code
-2. Click the Postcode icon in the activity bar OR run **Postcode: Create Request**
+1. Install the Postcode Collections (Community) extension for Visual Studio Code
+2. Click the Postcode Collections icon in the activity bar OR run **Postcode Collections: Create Request**
 3. Create your HTTP/s request and hit Send
 4. To save a request, use the Save button in the request bar, then choose a collection
 
@@ -30,9 +32,9 @@ Requests are saved to collections (stored per-workspace). Right-click collection
 
 ## Commands
 
-| Command                  | Description                                          |
-| ------------------------ | ---------------------------------------------------- |
-| Postcode: Create Request | Opens a new Postcode tab to create and test requests |
+| Command                              | Description                                         |
+| ------------------------------------ | --------------------------------------------------- |
+| Postcode Collections: Create Request | Opens a new request tab to create and test requests |
 
 ## Issues & Contributions
 
