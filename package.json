@@ -2,7 +2,7 @@
   "name": "devrequest-studio",
   "publisher": "thomas-barlow",
   "displayName": "DevRequest Studio",
-  "icon": "icons/icon.png",
+  "icon": "icons/Icon.png",
   "description": "A community API testing tool for VS Code focused on fast request iteration, reusable collections, and practical request export/snippets",
   "version": "1.4.5",
   "license": "MIT",
