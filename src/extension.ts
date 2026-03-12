@@ -316,9 +316,7 @@ export function activate(context: vscode.ExtensionContext) {
     "postcode.createRequest",
     () => {
       // The code you place here will be executed every time your command is executed
-      vscode.window.showInformationMessage(
-        "Welcome to DevRequest Studio!",
-      );
+      vscode.window.showInformationMessage("Welcome to DevRequest Studio!");
       createRequestPanel(context, collectionsProvider);
     },
   );

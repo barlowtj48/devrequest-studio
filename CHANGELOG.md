@@ -1,8 +1,13 @@
 # Change Log
 
-All notable changes to the "postcode-v2" extension will be documented in this file.
+All notable changes to the "devrequest-studio" extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+
+### 1.4.5
+
+- Rename extension package identifier to devrequest-studio
+- Update Marketplace links and badges to the new extension ID
 
 ### 1.4.4
 

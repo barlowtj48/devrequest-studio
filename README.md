@@ -2,9 +2,9 @@
 <div align="center">
   <strong> API client for VS Code 📦</strong>  
   <br/> <br/>
-  <a href="https://marketplace.visualstudio.com/items?itemName=thomas-barlow.postcode-v2&ssr=false#overview"><img src="https://img.shields.io/visual-studio-marketplace/i/thomas-barlow.postcode-v2" /></a>
-  <a href="https://marketplace.visualstudio.com/items?itemName=thomas-barlow.postcode-v2&ssr=false#version-history"><img src="https://img.shields.io/visual-studio-marketplace/v/thomas-barlow.postcode-v2" /></a>
-  <a href="https://marketplace.visualstudio.com/items?itemName=thomas-barlow.postcode-v2&ssr=false#review-details"><img src="https://img.shields.io/visual-studio-marketplace/r/thomas-barlow.postcode-v2" /></a>
+  <a href="https://marketplace.visualstudio.com/items?itemName=thomas-barlow.devrequest-studio&ssr=false#overview"><img src="https://img.shields.io/visual-studio-marketplace/i/thomas-barlow.devrequest-studio" /></a>
+  <a href="https://marketplace.visualstudio.com/items?itemName=thomas-barlow.devrequest-studio&ssr=false#version-history"><img src="https://img.shields.io/visual-studio-marketplace/v/thomas-barlow.devrequest-studio" /></a>
+  <a href="https://marketplace.visualstudio.com/items?itemName=thomas-barlow.devrequest-studio&ssr=false#review-details"><img src="https://img.shields.io/visual-studio-marketplace/r/thomas-barlow.devrequest-studio" /></a>
 </div>
 <br />
 
@@ -32,8 +32,8 @@ Requests are saved to collections (stored per-workspace). Right-click collection
 
 ## Commands
 
-| Command                              | Description                                         |
-| ------------------------------------ | --------------------------------------------------- |
+| Command                           | Description                                         |
+| --------------------------------- | --------------------------------------------------- |
 | DevRequest Studio: Create Request | Opens a new request tab to create and test requests |
 
 ## Issues & Contributions
