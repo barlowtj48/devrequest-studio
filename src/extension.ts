@@ -11,28 +11,10 @@ function createRequestPanel(
   context: vscode.ExtensionContext,
   collectionsProvider: CollectionsProvider,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  savedRequest?: any,
+  savedRequest?: any
 ) {
-  const webviewContent = fs
-    .readFileSync(
-      vscode.Uri.joinPath(context.extensionUri, "dist/index.html").fsPath,
-      { encoding: "utf-8" },
-    )
-    .replace(
-      "styleUri",
-      vscode.Uri.joinPath(context.extensionUri, "/dist/main.css")
-        .with({ scheme: "vscode-resource" })
-        .toString(),
-    )
-    .replace(
-      "scriptUri",
-      vscode.Uri.joinPath(context.extensionUri, "/dist/webview.js")
-        .with({ scheme: "vscode-resource" })
-        .toString(),
-    );
-
   const panel = vscode.window.createWebviewPanel(
-    "postcode",
+    "devrequest",
     savedRequest
       ? `${savedRequest.name} - DevRequest Studio`
       : "Create Request - DevRequest Studio",
@@ -41,8 +23,23 @@ function createRequestPanel(
       enableScripts: true,
       retainContextWhenHidden: true,
       localResourceRoots: [vscode.Uri.joinPath(context.extensionUri, "dist")],
-    },
+    }
   );
+
+  const styleUri = panel.webview.asWebviewUri(
+    vscode.Uri.joinPath(context.extensionUri, "dist/main.css")
+  );
+  const scriptUri = panel.webview.asWebviewUri(
+    vscode.Uri.joinPath(context.extensionUri, "dist/webview.js")
+  );
+
+  const webviewContent = fs
+    .readFileSync(
+      vscode.Uri.joinPath(context.extensionUri, "dist/index.html").fsPath,
+      { encoding: "utf-8" }
+    )
+    .replace("styleUri", styleUri.toString())
+    .replace("scriptUri", scriptUri.toString());
 
   panel.webview.html = webviewContent;
   panel.iconPath = vscode.Uri.joinPath(context.extensionUri, "icons/icon.png");
@@ -59,7 +56,7 @@ function createRequestPanel(
         }
       },
       undefined,
-      context.subscriptions,
+      context.subscriptions
     );
   }
 
@@ -68,7 +65,7 @@ function createRequestPanel(
     ({ method, url, headers, body, auth, options, type, requestData }) => {
       if (type === "save-request") {
         // Handle save request command
-        vscode.commands.executeCommand("postcode.saveRequest", requestData);
+        vscode.commands.executeCommand("devrequest.saveRequest", requestData);
         return;
       }
 
@@ -172,7 +169,7 @@ function createRequestPanel(
             statusText: resp.statusText,
             headers: resp.headers,
             duration: responseDuration,
-          }),
+          })
         )
         .catch((err) => {
           panel.webview.postMessage({
@@ -183,7 +180,7 @@ function createRequestPanel(
         });
     },
     undefined,
-    context.subscriptions,
+    context.subscriptions
   );
 }
 
@@ -193,13 +190,13 @@ export function activate(context: vscode.ExtensionContext) {
   // Initialize collections provider
   const collectionsProvider = new CollectionsProvider(context);
   vscode.window.registerTreeDataProvider(
-    "postcode.collections",
-    collectionsProvider,
+    "devrequest.collections",
+    collectionsProvider
   );
 
   // Register collections commands
   const createCollectionCommand = vscode.commands.registerCommand(
-    "postcode.createCollection",
+    "devrequest.createCollection",
     async () => {
       const name = await vscode.window.showInputBox({
         prompt: "Enter collection name",
@@ -208,39 +205,39 @@ export function activate(context: vscode.ExtensionContext) {
       if (name) {
         await collectionsProvider.createCollection(name);
       }
-    },
+    }
   );
 
   const deleteCollectionCommand = vscode.commands.registerCommand(
-    "postcode.deleteCollection",
+    "devrequest.deleteCollection",
     async (item: CollectionTreeItem) => {
       const confirm = await vscode.window.showWarningMessage(
         `Delete collection "${item.label}" and all its requests?`,
         "Delete",
-        "Cancel",
+        "Cancel"
       );
       if (confirm === "Delete") {
         await collectionsProvider.deleteCollection(item.itemId);
       }
-    },
+    }
   );
 
   const deleteRequestCommand = vscode.commands.registerCommand(
-    "postcode.deleteRequest",
+    "devrequest.deleteRequest",
     async (item: CollectionTreeItem) => {
       const confirm = await vscode.window.showWarningMessage(
         `Delete request "${item.label}"?`,
         "Delete",
-        "Cancel",
+        "Cancel"
       );
       if (confirm === "Delete") {
         await collectionsProvider.deleteRequest(item.itemId);
       }
-    },
+    }
   );
 
   const renameItemCommand = vscode.commands.registerCommand(
-    "postcode.renameItem",
+    "devrequest.renameItem",
     async (item: CollectionTreeItem) => {
       const newName = await vscode.window.showInputBox({
         prompt: `Rename ${item.itemType}`,
@@ -250,31 +247,31 @@ export function activate(context: vscode.ExtensionContext) {
         await collectionsProvider.renameItem(
           item.itemId,
           item.itemType,
-          newName,
+          newName
         );
       }
-    },
+    }
   );
 
   const loadRequestCommand = vscode.commands.registerCommand(
-    "postcode.loadRequest",
+    "devrequest.loadRequest",
     async (item: CollectionTreeItem) => {
-      const request = collectionsProvider.getRequest(item.itemId);
+      const request = await collectionsProvider.getRequest(item.itemId);
       if (request) {
         // Create a new webview panel with the loaded request
         createRequestPanel(context, collectionsProvider, request);
       }
-    },
+    }
   );
 
   const saveRequestCommand = vscode.commands.registerCommand(
-    "postcode.saveRequest",
+    "devrequest.saveRequest",
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async (requestData: any) => {
       const collections = collectionsProvider.getCollections();
       if (collections.length === 0) {
         vscode.window.showWarningMessage(
-          "No collections found. Create a collection first.",
+          "No collections found. Create a collection first."
         );
         return;
       }
@@ -287,7 +284,7 @@ export function activate(context: vscode.ExtensionContext) {
         collectionItems,
         {
           placeHolder: "Select a collection to save the request to",
-        },
+        }
       );
 
       if (selectedCollection) {
@@ -299,26 +296,26 @@ export function activate(context: vscode.ExtensionContext) {
         if (requestName) {
           await collectionsProvider.saveRequest(
             { ...requestData, name: requestName },
-            selectedCollection.id,
+            selectedCollection.id
           );
           vscode.window.showInformationMessage(
-            `Request "${requestName}" saved successfully!`,
+            `Request "${requestName}" saved successfully!`
           );
         }
       }
-    },
+    }
   );
 
   // The command has been defined in the package.json file
   // Now provide the implementation of the command with registerCommand
   // The commandId parameter must match the command field in package.json
   const disposable = vscode.commands.registerCommand(
-    "postcode.createRequest",
+    "devrequest.createRequest",
     () => {
       // The code you place here will be executed every time your command is executed
       vscode.window.showInformationMessage("Welcome to DevRequest Studio!");
       createRequestPanel(context, collectionsProvider);
-    },
+    }
   );
 
   context.subscriptions.push(
@@ -328,7 +325,7 @@ export function activate(context: vscode.ExtensionContext) {
     deleteRequestCommand,
     renameItemCommand,
     loadRequestCommand,
-    saveRequestCommand,
+    saveRequestCommand
   );
 }
 

@@ -48,6 +48,9 @@ const requestHeaderSlice = createSlice({
     requestHeaderDeleted(state, action: PayloadAction<number>) {
       state.splice(action.payload, 1);
     },
+    requestHeadersLoaded(state, action: PayloadAction<Header[]>) {
+      return action.payload;
+    },
   },
 });
 
@@ -55,6 +58,7 @@ export const {
   requestHeaderAdded,
   requestHeaderUpdated,
   requestHeaderDeleted,
+  requestHeadersLoaded,
 } = requestHeaderSlice.actions;
 
 export const selectRequestHeaders = (state: RootState) => state.requestHeader;

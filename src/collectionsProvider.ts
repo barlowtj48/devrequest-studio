@@ -64,7 +64,7 @@ export class CollectionTreeItem extends vscode.TreeItem {
       this.iconPath = this.getMethodIcon(method);
       this.description = method.toUpperCase();
       this.command = {
-        command: "postcode.loadRequest",
+        command: "devrequest.loadRequest",
         title: "Load Request",
         arguments: [this],
       };
@@ -99,8 +99,10 @@ export class CollectionsProvider
 
   private collections: Collection[] = [];
   private requests: Record<string, SavedRequest> = {};
+  private secrets: vscode.SecretStorage;
 
   constructor(private context: vscode.ExtensionContext) {
+    this.secrets = context.secrets;
     this.loadData();
   }
 
@@ -154,25 +156,45 @@ export class CollectionsProvider
 
   // Data management methods
   private loadData(): void {
-    const collectionsData =
-      this.context.workspaceState.get<Collection[]>("postcode.collections") ||
-      [];
-    const requestsData =
-      this.context.workspaceState.get<Record<string, SavedRequest>>(
-        "postcode.requests"
-      ) || {};
+    // Migrate from old "postcode.*" storage keys if needed
+    let collectionsData = this.context.workspaceState.get<Collection[]>(
+      "devrequest.collections"
+    );
+    let requestsData = this.context.workspaceState.get<
+      Record<string, SavedRequest>
+    >("devrequest.requests");
 
-    this.collections = collectionsData;
-    this.requests = requestsData;
+    if (!collectionsData) {
+      const legacy = this.context.workspaceState.get<Collection[]>(
+        "postcode.collections"
+      );
+      if (legacy) {
+        collectionsData = legacy;
+        this.context.workspaceState.update("postcode.collections", undefined);
+      }
+    }
+    if (!requestsData) {
+      const legacy =
+        this.context.workspaceState.get<Record<string, SavedRequest>>(
+          "postcode.requests"
+        );
+      if (legacy) {
+        requestsData = legacy;
+        this.context.workspaceState.update("postcode.requests", undefined);
+      }
+    }
+
+    this.collections = collectionsData || [];
+    this.requests = requestsData || {};
   }
 
   private async saveData(): Promise<void> {
     await this.context.workspaceState.update(
-      "postcode.collections",
+      "devrequest.collections",
       this.collections
     );
     await this.context.workspaceState.update(
-      "postcode.requests",
+      "devrequest.requests",
       this.requests
     );
   }
@@ -196,8 +218,19 @@ export class CollectionsProvider
     collectionId: string
   ): Promise<void> {
     const requestId = Date.now().toString();
+
+    // Store auth securely, strip from workspace state
+    const auth = request.auth;
+    if (auth && auth.type !== "noauth") {
+      await this.secrets.store(
+        `devrequest.auth.${requestId}`,
+        JSON.stringify(auth)
+      );
+    }
+
     const newRequest: SavedRequest = {
       ...request,
+      auth: { type: auth?.type || "noauth" },
       id: requestId,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
@@ -219,9 +252,10 @@ export class CollectionsProvider
     const collection = this.collections.find((c) => c.id === collectionId);
     if (collection) {
       // Delete all requests in the collection
-      collection.requests.forEach((requestId) => {
+      for (const requestId of collection.requests) {
         delete this.requests[requestId];
-      });
+        await this.secrets.delete(`devrequest.auth.${requestId}`);
+      }
 
       // Remove the collection
       this.collections = this.collections.filter((c) => c.id !== collectionId);
@@ -233,6 +267,7 @@ export class CollectionsProvider
 
   async deleteRequest(requestId: string): Promise<void> {
     delete this.requests[requestId];
+    await this.secrets.delete(`devrequest.auth.${requestId}`);
 
     // Remove from all collections
     this.collections.forEach((collection) => {
@@ -269,8 +304,21 @@ export class CollectionsProvider
     this.refresh();
   }
 
-  getRequest(requestId: string): SavedRequest | undefined {
-    return this.requests[requestId];
+  async getRequest(requestId: string): Promise<SavedRequest | undefined> {
+    const request = this.requests[requestId];
+    if (!request) {
+      return undefined;
+    }
+    // Merge auth back from secure storage
+    const authJson = await this.secrets.get(`devrequest.auth.${requestId}`);
+    if (authJson) {
+      try {
+        request.auth = JSON.parse(authJson);
+      } catch {
+        // ignore parse errors
+      }
+    }
+    return request;
   }
 
   getCollections(): Collection[] {

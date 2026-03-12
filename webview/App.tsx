@@ -2,8 +2,11 @@ import * as React from "react";
 import "./App.css";
 import { responseUpdated } from "./features/response/responseSlice";
 import { requestMethodUpdated } from "./features/requestMethod/requestMethodSlice";
-import { requestUrlUpdated } from "./features/requestUrl/requestUrlSlice";
-import { Postcode } from "./pages/Postcode";
+import { requestUrlLoaded } from "./features/requestUrl/requestUrlSlice";
+import { requestAuthLoaded } from "./features/requestAuth/requestAuthSlice";
+import { requestBodyLoaded } from "./features/requestBody/requestBodySlice";
+import { requestHeadersLoaded } from "./features/requestHeader/requestHeaderSlice";
+import { DevRequest } from "./pages/DevRequest";
 import { useAppDispatch } from "./redux/hooks";
 import vscode from "./vscode";
 
@@ -20,21 +23,30 @@ const App = () => {
       if (event.data.type === "response") {
         dispatch(responseUpdated(event.data));
       } else if (event.data.type === "load-request") {
-        // Load a saved request into the current state
         const request = event.data.request;
-        // Update method
         dispatch(requestMethodUpdated(request.method));
-        // Update URL
-        dispatch(requestUrlUpdated(request.url));
-        // TODO: Add more request loading logic for headers, body, auth, etc.
-        // For now, we'll load the basic method and URL
+        dispatch(
+          requestUrlLoaded({
+            url: request.url,
+            queryParams: request.queryParams,
+          })
+        );
+        if (request.headers) {
+          dispatch(requestHeadersLoaded(request.headers));
+        }
+        if (request.body) {
+          dispatch(requestBodyLoaded(request.body));
+        }
+        if (request.auth) {
+          dispatch(requestAuthLoaded(request.auth));
+        }
       }
     });
   }, [dispatch]);
 
   return (
     <div className="App">
-      <Postcode />
+      <DevRequest />
     </div>
   );
 };

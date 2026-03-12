@@ -93,6 +93,9 @@ const requestBodySlice = createSlice({
         state.disabled = false;
       }
     },
+    requestBodyLoaded(state, action: PayloadAction<RequestBodyState>) {
+      return action.payload;
+    },
   },
 });
 
@@ -110,6 +113,7 @@ export const {
   requestBodyUrlEncodedItemUpdated,
   requestBodyGraphqlQueryUpdated,
   requestBodyGraphqlVariablesUpdated,
+  requestBodyLoaded,
 } = requestBodySlice.actions;
 
 export const selectRequestBody = (state: RootState) => state.requestBody;

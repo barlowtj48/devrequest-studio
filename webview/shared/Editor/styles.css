@@ -2,7 +2,7 @@
   border: var(--default-border-size) solid var(--border);
 }
 
-.postcode-editor {
+.devrequest-editor {
   position: relative;
 }
 
@@ -24,7 +24,7 @@
   visibility: hidden;
 }
 
-.postcode-editor:hover .copy-button {
+.devrequest-editor:hover .copy-button {
   opacity: 1;
   visibility: visible;
 }

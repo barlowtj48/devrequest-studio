@@ -4,7 +4,7 @@
   "displayName": "DevRequest Studio",
   "icon": "icons/Icon.png",
   "description": "A community API testing tool for VS Code focused on fast request iteration, reusable collections, and practical request export/snippets",
-  "version": "1.4.5",
+  "version": "1.4.6",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/barlowtj48/devrequest-studio/issues"
@@ -27,40 +27,41 @@
     "http"
   ],
   "activationEvents": [
-    "onCommand:postcode.createRequest"
+    "onCommand:devrequest.createRequest"
   ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "postcode.createRequest",
-        "title": "DevRequest Studio: Create Request"
+        "command": "devrequest.createRequest",
+        "title": "DevRequest Studio: Create Request",
+        "icon": "$(add)"
       },
       {
-        "command": "postcode.saveRequest",
+        "command": "devrequest.saveRequest",
         "title": "Save Request"
       },
       {
-        "command": "postcode.loadRequest",
+        "command": "devrequest.loadRequest",
         "title": "Load Request"
       },
       {
-        "command": "postcode.createCollection",
+        "command": "devrequest.createCollection",
         "title": "Create Collection",
         "icon": "$(new-folder)"
       },
       {
-        "command": "postcode.deleteCollection",
+        "command": "devrequest.deleteCollection",
         "title": "Delete Collection",
         "icon": "$(trash)"
       },
       {
-        "command": "postcode.deleteRequest",
+        "command": "devrequest.deleteRequest",
         "title": "Delete Request",
         "icon": "$(trash)"
       },
       {
-        "command": "postcode.renameItem",
+        "command": "devrequest.renameItem",
         "title": "Rename",
         "icon": "$(edit)"
       }
@@ -68,58 +69,63 @@
     "viewsContainers": {
       "activitybar": [
         {
-          "id": "postcode",
+          "id": "devrequest",
           "title": "DevRequest Studio",
           "icon": "webview/icons/package.svg"
         }
       ]
     },
     "views": {
-      "postcode": [
+      "devrequest": [
         {
-          "id": "postcode.collections",
+          "id": "devrequest.collections",
           "name": "Collections"
         }
       ]
     },
     "viewsWelcome": [
       {
-        "view": "postcode.collections",
-        "contents": "[Create Request](command:postcode.createRequest)\n\n[Create Collection](command:postcode.createCollection)"
+        "view": "devrequest.collections",
+        "contents": "[Create Request](command:devrequest.createRequest)\n\n[Create Collection](command:devrequest.createCollection)"
       }
     ],
     "menus": {
       "view/title": [
         {
-          "command": "postcode.createCollection",
-          "when": "view == postcode.collections",
+          "command": "devrequest.createRequest",
+          "when": "view == devrequest.collections",
+          "group": "navigation"
+        },
+        {
+          "command": "devrequest.createCollection",
+          "when": "view == devrequest.collections",
           "group": "navigation"
         }
       ],
       "view/item/context": [
         {
-          "command": "postcode.loadRequest",
-          "when": "view == postcode.collections && viewItem == request",
+          "command": "devrequest.loadRequest",
+          "when": "view == devrequest.collections && viewItem == request",
           "group": "inline"
         },
         {
-          "command": "postcode.renameItem",
-          "when": "view == postcode.collections && viewItem == request",
+          "command": "devrequest.renameItem",
+          "when": "view == devrequest.collections && viewItem == request",
           "group": "context"
         },
         {
-          "command": "postcode.deleteRequest",
-          "when": "view == postcode.collections && viewItem == request",
+          "command": "devrequest.deleteRequest",
+          "when": "view == devrequest.collections && viewItem == request",
           "group": "context"
         },
         {
-          "command": "postcode.renameItem",
-          "when": "view == postcode.collections && viewItem == collection",
+          "command": "devrequest.renameItem",
+          "when": "view == devrequest.collections && viewItem == collection",
           "group": "context"
         },
         {
-          "command": "postcode.deleteCollection",
-          "when": "view == postcode.collections && viewItem == collection",
+          "command": "devrequest.deleteCollection",
+          "when": "view == devrequest.collections && viewItem == collection",
           "group": "context"
         }
       ]

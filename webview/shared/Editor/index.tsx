@@ -67,7 +67,7 @@ const Editor = (props) => {
   }, [value, language, editor, format]);
 
   return (
-    <div className={`${className} postcode-editor`} ref={divEl}>
+    <div className={`${className} devrequest-editor`} ref={divEl}>
       {copyButton && (
         <button
           onClick={() => {

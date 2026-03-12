@@ -41,11 +41,17 @@ const requestAuthSlice = createSlice({
     ) {
       state[state.type] = action.payload;
     },
+    requestAuthLoaded(state, action: PayloadAction<RequestAuthState>) {
+      return action.payload;
+    },
   },
 });
 
-export const { requestAuthTypeUpdated, requestAuthOptionsUpdated } =
-  requestAuthSlice.actions;
+export const {
+  requestAuthTypeUpdated,
+  requestAuthOptionsUpdated,
+  requestAuthLoaded,
+} = requestAuthSlice.actions;
 
 export const selectRequestAuth = (state: RootState) => state.requestAuth;
 export const selectRequestAuthType = (state: RootState) =>
