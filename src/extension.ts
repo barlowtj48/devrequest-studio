@@ -34,8 +34,8 @@ function createRequestPanel(
   const panel = vscode.window.createWebviewPanel(
     "postcode",
     savedRequest
-      ? `${savedRequest.name} - Postcode Collections`
-      : "Create Request - Postcode Collections",
+      ? `${savedRequest.name} - DevRequest Studio`
+      : "Create Request - DevRequest Studio",
     vscode.ViewColumn.One,
     {
       enableScripts: true,
@@ -317,7 +317,7 @@ export function activate(context: vscode.ExtensionContext) {
     () => {
       // The code you place here will be executed every time your command is executed
       vscode.window.showInformationMessage(
-        "Welcome to Postcode Collections (Community)!",
+        "Welcome to DevRequest Studio!",
       );
       createRequestPanel(context, collectionsProvider);
     },

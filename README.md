@@ -1,4 +1,4 @@
-<h1 align="center">Postcode Collections (Community)</h1>
+<h1 align="center">DevRequest Studio</h1>
 <div align="center">
   <strong> API client for VS Code 📦</strong>  
   <br/> <br/>
@@ -8,7 +8,7 @@
 </div>
 <br />
 
-Postcode Collections (Community) is a community-maintained fork of [Postcode](https://github.com/rohinivsenthil/postcode) focused on workspace collections. It helps you create and test HTTP/s requests, then save and organize them for reuse.
+DevRequest Studio is a community-maintained fork of [Postcode](https://github.com/rohinivsenthil/postcode) focused on workspace collections. It helps you create and test HTTP/s requests, then save and organize them for reuse.
 
 > This extension is an independent community fork and is not affiliated with or published by the maintainers of the original Postcode extension.
 
@@ -21,8 +21,8 @@ Postcode Collections (Community) is a community-maintained fork of [Postcode](ht
 
 ## Quick start
 
-1. Install the Postcode Collections (Community) extension for Visual Studio Code
-2. Click the Postcode Collections icon in the activity bar OR run **Postcode Collections: Create Request**
+1. Install the DevRequest Studio extension for Visual Studio Code
+2. Click the DevRequest Studio icon in the activity bar OR run **DevRequest Studio: Create Request**
 3. Create your HTTP/s request and hit Send
 4. To save a request, use the Save button in the request bar, then choose a collection
 
@@ -34,11 +34,11 @@ Requests are saved to collections (stored per-workspace). Right-click collection
 
 | Command                              | Description                                         |
 | ------------------------------------ | --------------------------------------------------- |
-| Postcode Collections: Create Request | Opens a new request tab to create and test requests |
+| DevRequest Studio: Create Request | Opens a new request tab to create and test requests |
 
 ## Issues & Contributions
 
-- File issues or feature requests on [GitHub](https://github.com/barlowtj48/postcode-v2/issues)
+- File issues or feature requests on [GitHub](https://github.com/barlowtj48/devrequest-studio/issues)
 
 ## Credits
 

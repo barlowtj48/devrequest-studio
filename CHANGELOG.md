@@ -4,6 +4,11 @@ All notable changes to the "postcode-v2" extension will be documented in this fi
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+### 1.4.4
+
+- Rename extension branding to DevRequest Studio for a clearer marketplace identity
+- Update extension listing description and user-facing labels to match the new name
+
 ### 1.4.3
 
 - Update extension branding text and command label to better differentiate this community fork from the original Postcode extension
